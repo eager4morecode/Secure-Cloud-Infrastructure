@@ -29,4 +29,23 @@ module "security" {
     "Environment" = "dev"
   }
 }
+module "compute" {
+  source = "../../modules/compute_aws"
+
+  name                = "demo-dev"
+  vpc_id              = module.network.vpc_id
+  public_subnet_ids   = module.network.public_subnet_ids
+  private_subnet_id   = module.network.private_subnet_ids[0]
+
+  alb_sg_id           = module.security.alb_security_group_id
+  app_sg_id           = module.security.app_security_group_id
+  instance_profile_name = module.security.iam_instance_profile_name
+
+  instance_type       = "t3.micro"
+  app_port            = 80
+
+  tags = {
+    Environment = "dev"
+  }
+}
 
