@@ -14,3 +14,19 @@ module "network" {
     "Environment" = "dev"
   }
 }
+module "security" {
+  source = "../../modules/security_aws"
+
+  name                     = "demo-dev"
+  vpc_id                   = module.network.vpc_id
+  app_port                 = 80
+  allowed_alb_ingress_cidrs = ["0.0.0.0/0"]  # tighten for real clients if needed
+  enable_https_ingress     = false
+  enable_ssh_sg            = false          # true if you want SSH SG
+  enable_s3_read_access    = true
+
+  tags = {
+    "Environment" = "dev"
+  }
+}
+
