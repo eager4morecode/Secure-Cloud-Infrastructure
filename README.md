@@ -186,3 +186,24 @@ Add Terraform unit tests with Terratest
 
 If you're reviewing this project as part of my Upwork portfolio, feel free to reach out.
 I can deploy, automate, secure, or modernize your cloud environment based on your needs.
+
+🚀 How to Run This (First Time)
+1️⃣ Create backend resources (one-time)
+
+aws s3 mb s3://your-tf-state-bucket
+aws dynamodb create-table \
+  --table-name terraform-locks \
+  --attribute-definitions AttributeName=LockID,AttributeType=S \
+  --key-schema AttributeName=LockID,KeyType=HASH \
+  --billing-mode PAY_PER_REQUEST
+
+2️⃣ Deploy
+
+cd environments/dev
+terraform init
+terraform plan
+terraform apply
+
+
+  
+
